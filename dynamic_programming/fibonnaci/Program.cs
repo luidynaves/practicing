@@ -18,6 +18,8 @@ namespace fibonnaci
 
             CallFibonacciDynamicProgramming(n);
 
+            CallFibonacciSimpleLooping(n);
+
             Console.ReadKey();
         }
 
@@ -32,7 +34,7 @@ namespace fibonnaci
             int fibonacci = Fibonacci(n);
             stopwatch.Stop();
 
-            Console.WriteLine($"Fibonacci of {n} => {fibonacci} - {calculating} Number of iterations - time: {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"Fibonacci of {n} => {fibonacci} - {calculating} Number of calculations - time: {stopwatch.ElapsedMilliseconds} ms");
         }
 
         private static int Fibonacci(int n)
@@ -58,7 +60,7 @@ namespace fibonnaci
             int dynamicFibonnaci = FibonacciDynamicProgramming(n);
             stopwatch.Stop();
 
-            Console.WriteLine($"DP - Fibonacci of {n} => {dynamicFibonnaci} - {calculating} Number of iterations - time: {stopwatch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"DP - Fibonacci of {n} => {dynamicFibonnaci} - {calculating} Number of calculations - time: {stopwatch.ElapsedMilliseconds} ms");
         }
 
         private static int FibonacciDynamicProgramming(int n)
@@ -73,6 +75,42 @@ namespace fibonnaci
             int value = FibonacciDynamicProgramming(n - 1) + FibonacciDynamicProgramming(n - 2);
             calculatedFibonaccis.Add(n, value);
             return calculatedFibonaccis[n];
+        }
+
+        #endregion
+
+        #region Fibonacci Simple Looping
+
+
+        private static void CallFibonacciSimpleLooping(int n)
+        {
+            calculatedFibonaccis = new Dictionary<int, int>();
+            calculating = 0;
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            int dynamicFibonnaci = FibonacciSimpleLooping(n);
+            stopwatch.Stop();
+
+            Console.WriteLine($"SL - Fibonacci of {n} => {dynamicFibonnaci} - {calculating} Number of calculations - time: {stopwatch.ElapsedMilliseconds} ms");
+        }
+
+        private static int FibonacciSimpleLooping(int n)
+        {
+            if(n <= 2) return n;
+
+            int n1 = 1;
+            int n2 = 2;
+
+            for(int i = 3; i < n; i++)
+            {
+                calculating++;
+                var oldN1 = n1;
+                n1 = n2;
+                n2 = oldN1 + n2;
+            }
+
+            return n2;
         }
 
         #endregion
