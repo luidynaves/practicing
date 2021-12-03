@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace ConwaysGameOfLife
 {
@@ -45,7 +46,7 @@ namespace ConwaysGameOfLife
 
         private static void PrintGrid(int rows, int cols)
         {
-            Console.WriteLine("====================================");
+            Console.Clear();
 
             for (int row = 0; row < rows; row++)
             {
@@ -57,7 +58,7 @@ namespace ConwaysGameOfLife
                 Console.WriteLine("");
             }
 
-            Console.WriteLine("====================================");
+            Thread.Sleep(1000);
         }
 
         static bool IsCellLives(int row, int col)
@@ -70,11 +71,17 @@ namespace ConwaysGameOfLife
                 int neighbourRow = neighbour[0] + row;
                 int neighbourCol = neighbour[1] + col;
 
-                if (neighbourRow < 0 || neighbourRow > _rows - 1)
-                    continue;
+                if (neighbourRow < 0)
+                    neighbourRow = _rows - 1;
 
-                if (neighbourCol < 0 || neighbourCol > _cols - 1)
-                    continue;
+                if (neighbourRow > _rows - 1)
+                    neighbourRow = 0;
+
+                if (neighbourCol < 0)
+                    neighbourCol = _cols - 1;
+
+                if (neighbourCol > _cols - 1)
+                    neighbourCol = 0;
 
                 if (_grid[neighbourRow, neighbourCol])
                     neighboursNumber++;
